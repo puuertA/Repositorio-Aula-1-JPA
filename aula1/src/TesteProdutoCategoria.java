@@ -40,6 +40,7 @@ public class TesteProdutoCategoria {
         
         for(Produto p : produtos){
             System.out.println("Descricao: "+p.getDescricao());
+            System.out.println("Categoria: "+p.getCategoria().getDescricao());
         }
         
         em.close();
