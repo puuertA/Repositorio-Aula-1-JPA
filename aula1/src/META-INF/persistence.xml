@@ -6,7 +6,7 @@
     <class>br.edu.ifsp.pep.modelo.Categoria</class>
     <class>br.edu.ifsp.pep.modelo.Produto</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_aula?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_aula?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;createDatabaseIfNotExist=true&amp;serverTimezone=UTC&amp;serverTimezone=America/Sao_Paulo"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="ifsp"/>

@@ -1,11 +1,13 @@
 package br.edu.ifsp.pep.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -22,6 +24,9 @@ public class Categoria implements Serializable {
     @Column(name = "descricao", length = 40, nullable = false)
     private String descricao;
 
+    @OneToMany(mappedBy = "categoria")
+    private List<Produto> produtos;
+    
     public Integer getId() {
         return id;
     }
@@ -36,6 +41,18 @@ public class Categoria implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void addProduto(Produto produto) {
+        produtos.add(produto);
+    }
+    
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
     
     
