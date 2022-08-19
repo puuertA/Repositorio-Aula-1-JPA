@@ -1,4 +1,6 @@
 
+import br.edu.ifsp.pep.dao.CategoriaDAO;
+import br.edu.ifsp.pep.dao.ProdutoDAO;
 import br.edu.ifsp.pep.modelo.Categoria;
 import br.edu.ifsp.pep.modelo.Produto;
 import java.math.BigDecimal;
@@ -16,6 +18,8 @@ public class TesteProdutoCategoria {
         Categoria categoria = new Categoria();
         categoria.setDescricao("Informática");
         
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        categoriaDAO.inserir(categoria);
         
         Produto produto = new Produto();
         produto.setDescricao("Teclado");
@@ -24,10 +28,11 @@ public class TesteProdutoCategoria {
         
         produto.setCategoria(categoria);
         
-        em.getTransaction().begin();
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        produtoDAO.inserir(produto);
         
-        em.persist(categoria);
-        em.persist(produto);
+//        em.persist(categoria);
+//        em.persist(produto);
         
         em.getTransaction().commit();
         
@@ -36,8 +41,7 @@ public class TesteProdutoCategoria {
         // SELECT p FROM Produto p
         TypedQuery<Produto> query = em.createQuery("SELECT p FROM Produto p", Produto.class);
         
-        List<Produto> produtos = query.getResultList();
-        
+        List<Produto> produtos = produtoDAO.buscar();
         for(Produto p : produtos){
             System.out.println("Descricao: "+p.getDescricao());
             System.out.println("Categoria: "+p.getCategoria().getDescricao());
@@ -46,4 +50,5 @@ public class TesteProdutoCategoria {
         em.close();
         
     }
+   
 }
