@@ -5,50 +5,44 @@ import br.edu.ifsp.pep.modelo.Categoria;
 import br.edu.ifsp.pep.modelo.Produto;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-
 
 public class TesteProdutoCategoria {
+
     public static void main(String[] args) {
-        EntityManager em = Persistence.createEntityManagerFactory("aula1PU").createEntityManager();
-        
-        
-        Categoria categoria = new Categoria();
-        categoria.setDescricao("Informática");
-        
+
+        ProdutoDAO produtoDAO = new ProdutoDAO();
         CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Categoria categoria = new Categoria();
+        categoria.setDescricao("Informátiva");
         categoriaDAO.inserir(categoria);
-        
         Produto produto = new Produto();
         produto.setDescricao("Teclado");
         produto.setPreco(new BigDecimal(60.0));
         produto.setQuantidade(100);
-        
         produto.setCategoria(categoria);
-        
-        ProdutoDAO produtoDAO = new ProdutoDAO();
         produtoDAO.inserir(produto);
-        
-//        em.persist(categoria);
-//        em.persist(produto);
-        
-        em.getTransaction().commit();
-        
-        // JPL
-        // Sempre pensar em classes
-        // SELECT p FROM Produto p
-        TypedQuery<Produto> query = em.createQuery("SELECT p FROM Produto p", Produto.class);
-        
-        List<Produto> produtos = produtoDAO.buscar();
-        for(Produto p : produtos){
-            System.out.println("Descricao: "+p.getDescricao());
-            System.out.println("Categoria: "+p.getCategoria().getDescricao());
+        adicionarProdutos();
+        List produtos = produtoDAO.buscar();
+        for (Produto p : produtos) {
+            System.out.println("Descrição: " + p.getDescricao());
+            System.out.println("Categoria: " + p.getCategoria().getDescricao());
         }
-        
-        em.close();
-        
+
     }
-   
+
+    public static void adicionarProdutos() {
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        for (int i = 0; i < 10; i++) {
+            Categoria categoria = new Categoria();
+            categoria.setDescricao("Categoria " + i);
+            categoriaDAO.inserir(categoria);
+            Produto produto = new Produto();
+            produto.setDescricao("Produto " + i);
+            produto.setPreco(new BigDecimal(60.0 * (i + 1)));
+            produto.setQuantidade(100);
+            produto.setCategoria(categoria);
+            produtoDAO.inserir(produto);
+        }
+    }
 }
